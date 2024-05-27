@@ -83,6 +83,7 @@ nav ul li {
             border-radius: 4px;
             margin-top: 10px;
         }
+       
         footer {
             background-image: url('kabul.png');
             background-size: cover;
@@ -95,6 +96,11 @@ nav ul li {
             bottom: 0;
             width: 100%;
         }
+        #popupAd img {
+    max-width: 100%; /* Ensures the image fits within the popup */
+    height: auto; /* Maintains the aspect ratio */
+    border-radius: 4px; /* Optional: Rounds the corners of the image */
+}
         #popupAd {
             position: fixed;
             width: 300px;
@@ -153,16 +159,34 @@ nav ul li {
     <script>
         // Ad data
         const ads = [
-            "<h3>Special Offer!</h3><p>Don't miss out on our exclusive offer. Click here!</p>",
-            "<h3>Subscribe Now!</h3><p>Get the latest updates right in your inbox. Subscribe today!</p>",
-            "<h3>New Product Launch!</h3><p>Check out our latest product. Available now!</p>"
-        ];
+    {
+        title: "Special Offer!",
+        content: "Don't miss out on our ultra sharp 'killer' shovel",
+        image: "shovel.png"
+    },
+    {
+        title: "Limited Time Sale! Buy 1 get 1 Free",
+        content: "",
+        image: "burka.png"
+    },
+    {
+        title: "New Product Launch!",
+        content: "Rice ready is only 2 minutes!",
+        image: "ricecooker.png"
+    }
+];
 
-        function chooseAd() {
-            const adIndex = Math.floor(Math.random() * ads.length);
-            document.getElementById('adContent').innerHTML = ads[adIndex];
-            document.getElementById('popupAd').style.display = 'block'; // Show the popup
-        }
+function chooseAd() {
+    const adIndex = Math.floor(Math.random() * ads.length); // Correctly uses adIndex
+    const ad = ads[adIndex];  // Properly access the ad using adIndex
+    const adContentHTML = `
+        <h3>${ad.title}</h3>
+        <p>${ad.content}</p>
+        <img src="${ad.image}" alt="${ad.title}" style="width:100%; height: auto; border-radius: 4px;">
+    `;
+    document.getElementById('adContent').innerHTML = adContentHTML;
+    document.getElementById('popupAd').style.display = 'block';
+}
 
         function closeAd() {
             document.getElementById('popupAd').style.display = 'none';
@@ -207,5 +231,10 @@ nav ul li {
     window.location.href = page;
 }
     </script>
+
+<div id="popupAd">
+    <span id="closeAd" onclick="closeAd()">×</span>
+    <div id="adContent"></div>
+</div>
 </body>
 </html>

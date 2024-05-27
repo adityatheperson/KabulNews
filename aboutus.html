@@ -65,6 +65,31 @@
             bottom: 0;
             width: 100%;
         }
+        #popupAd img {
+    max-width: 100%; /* Ensures the image fits within the popup */
+    height: auto; /* Maintains the aspect ratio */
+    border-radius: 4px; /* Optional: Rounds the corners of the image */
+}
+        #popupAd {
+            position: fixed;
+            width: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+        }
+        #closeAd {
+            cursor: pointer;
+            float: right;
+            font-size: 18px;
+            line-height: 20px;
+            padding: 0 10px;
+        }
     </style>
 </head>
 <body>
@@ -84,11 +109,56 @@
     <div class="content-section">
         <h2>About Us</h2>
         <p>Welcome to Kabul News, your number one source for news in Kabul. At Kabul News, we are dedicated to providing you with the most accurate and up-to-date information about the happenings in and around Kabul. Our team is made up of experienced journalists and dedicated support staff who work tirelessly to bring you the stories that matter.</p>
-        <p>Founded in 2022, Kabul News has become a trusted name in local journalism, known for our in-depth analysis and comprehensive coverage of local events. Whether it's political developments, economic issues, or cultural stories, we cover it all with integrity and a commitment to journalistic excellence.</p>
+        <p>Founded in the year 1960, Kabul News has become a trusted name in local journalism, known for our in-depth analysis and comprehensive coverage of local events. Whether it's political developments, economic issues, or cultural stories, we cover it all with integrity and a commitment to journalistic excellence.</p>
+        <p>Thanks for supporting us!</p>
     </div>
 
     <footer>
         <p>Copyright &copy; 2022 Kabul News. All rights reserved.</p>
     </footer>
+    <script>
+        // Ad data
+        const ads = [
+   {
+       title: "Special Offer!",
+       content: "Don't miss out on our ultra sharp 'killer' shovel",
+       image: "shovel.png"
+   },
+   {
+       title: "Limited Time Sale! Buy 1 get 1 Free",
+       content: "",
+       image: "burka.png"
+   },
+   {
+       title: "New Product Launch!",
+       content: "Rice ready is only 2 minutes!",
+       image: "ricecooker.png"
+   }
+];
+
+function chooseAd() {
+   const adIndex = Math.floor(Math.random() * ads.length); // Correctly uses adIndex
+   const ad = ads[adIndex];  // Properly access the ad using adIndex
+   const adContentHTML = `
+       <h3>${ad.title}</h3>
+       <p>${ad.content}</p>
+       <img src="${ad.image}" alt="${ad.title}" style="width:100%; height: auto; border-radius: 4px;">
+   `;
+   document.getElementById('adContent').innerHTML = adContentHTML;
+   document.getElementById('popupAd').style.display = 'block';
+}
+
+       function closeAd() {
+           document.getElementById('popupAd').style.display = 'none';
+       }
+       window.onload = function() {
+           setInterval(chooseAd, 180000); // Refresh ad every 3 minutes
+       }
+   </script>
+
+<div id="popupAd">
+   <span id="closeAd" onclick="closeAd()">×</span>
+   <div id="adContent"></div>
+</div>
 </body>
 </html>
