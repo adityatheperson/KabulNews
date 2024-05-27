@@ -6,26 +6,40 @@
     <title>Kabul News</title>
     <style>
         body {
+            -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
         header {
-    background-image: url('path_to_your_image.jpg'); /* Replace 'path_to_your_image.jpg' with the actual path to your image */
-    color: white;
-    padding: 20px 20px;
-    text-align: center;
-    background-size: cover; /* Ensures the background image covers the entire header */
-    background-position: center; /* Centers the background image */
-}
-
+            background-image: url('kabul.png');
+            background-size: cover;
+            background-position: center;
+            background-color: #003366;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
         nav {
-            background: #333;
+            background: #003366;
             color: white;
             text-align: center;
             padding: 10px 0;
         }
+        nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
         nav a {
             color: white;
             text-decoration: none;
@@ -34,13 +48,45 @@
         nav a:hover {
             text-decoration: underline;
         }
-        article {
-            margin: 20px;
+        .news-section {
             padding: 20px;
+            margin: 20px;
             background-color: white;
             border-radius: 8px;
         }
+        .breaking-news {
+            border: 2px solid red;
+            padding: 10px;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffe259, #ffa751);
+            color: #003366;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.04);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .news-image {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
         footer {
+            background-image: url('kabul.png');
+            background-size: cover;
+            background-position: bottom;
             text-align: center;
             padding: 10px 0;
             background-color: #003366;
@@ -49,26 +95,117 @@
             bottom: 0;
             width: 100%;
         }
+        #popupAd {
+            position: fixed;
+            width: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+        }
+        #closeAd {
+            cursor: pointer;
+            float: right;
+            font-size: 18px;
+            line-height: 20px;
+            padding: 0 10px;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Kabul News</h1>
-        <p>Insights and Stories Inspired by "A Thousand Splendid Suns"</p>
+        <p>Reporting on everything and anything Kabul related</p>
+        
     </header>
     <nav>
-        <a href="#home">Home</a>
-        <a href="#news">Latest News</a>
-        <a href="#articles">Articles</smal></a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+        <ul>
+        <li><a href="#home" onclick="navigateToPage('index.html') ;">Home</a></li>
+        <li><a href="#home" onclick="navigateToPage('articles.html'); ">Articles</a></li>
+        <li><a href="#home" onclick="navigateToPage('aboutus.html'); ">About Us</a></li>
+        <li><a href="#home" onclick="navigateToPage('jobs.html'); ">Jobs</a></li>
+        </ul>
     </nav>
-    <article>
-        <h2>Welcome to Kabul News</h2>
-        <p>This is your number one source for news and insights inspired by the deep and resonant themes of "A Thousand Splendid Suns". Here, we explore the rich tapestry of Kabul's culture, history, and current events through the lens of the profound narratives found in Khaled Hosseini's beloved novel.</p>
-    </article>
+
+    
+    <div class="news-section" id="breakingNews">
+        <!-- Breaking news will be inserted here -->
+    </div>
+    
+    <div class="news_section" id="otherNews">
+        <!-- Other news articles will be inserted here -->
+    </div>
+
+    <div id="popupAd">
+        <span id="closeAd" onclick="closeAd()">×</span>
+        <div id="adContent"></div>
+    </div>
+    
     <footer>
         <p>Copyright &copy; 2022 Kabul News. All rights reserved.</p>
     </footer>
+    
+    <script>
+        // Ad data
+        const ads = [
+            "<h3>Special Offer!</h3><p>Don't miss out on our exclusive offer. Click here!</p>",
+            "<h3>Subscribe Now!</h3><p>Get the latest updates right in your inbox. Subscribe today!</p>",
+            "<h3>New Product Launch!</h3><p>Check out our latest product. Available now!</p>"
+        ];
+
+        function chooseAd() {
+            const adIndex = Math.floor(Math.random() * ads.length);
+            document.getElementById('adContent').innerHTML = ads[adIndex];
+            document.getElementById('popupAd').style.display = 'block'; // Show the popup
+        }
+
+        function closeAd() {
+            document.getElementById('popupAd').style.display = 'none';
+        }
+
+        // News Article display functionality
+        const newsArticles = [
+            { title: "Breaking News: Peace Talks Begin", content: "In a historic move, peace talks have begun in Kabul...", imageUrl: "https://example.com/images/peace-talks.jpg", isBreaking: true },
+            { title: "Local Update: New School Opens", content: "A new school in Kabul opens its doors this week to hundreds of eager students...", imageUrl: "https://example.com/images/new-school.jpg", isBreaking: false },
+            { title: "Economic News: Market Rises", content: "The Kabul stock market showed signs of recovery with a steady rise this morning...", imageUrl: "https://example.com/images/market-rise.jpg", isBreaking: false }
+        ];
+
+        function displayNews() {
+            const breakingNewsContainer = document.getElementById('breakingNews');
+            const otherNewsContainer = document.getElementById('otherNews');
+            breakingNewsContainer.innerHTML = ''; // Clear previous content
+            otherNewsContainer.innerHTML = ''; // Clear previous content
+
+            let displayedBreaking = false;
+
+            newsArticles.forEach(article => {
+                const newsItem = `<div class="${article.isBreaking && !displayedBreaking ? 'breaking-news' : 'news-section'}">
+                                      <h3>${article.title}</h3>
+                                      <p>${article.content}</p>
+                                      <img src="${article.imageUrl}" alt="Image for ${article.title}" class="news-image">
+                                  </div>`;
+                if (article.isBreaking && !displayedBreaking) {
+                    breakingNewsContainer.innerHTML = newsItem;
+                    displayedBreaking = true; // Ensure only one breaking news is shown
+                } else {
+                    otherNewsContainer.innerHTML += newsItem;
+                }
+            });
+        }
+
+        window.onload = function() {
+            displayNews(); // Display news when the page loads
+            chooseAd(); // Display first ad when the page loads
+            setInterval(chooseAd, 180000); // Refresh ad every 3 minutes
+        }
+        function navigateToPage(page) {
+    window.location.href = page;
+}
+    </script>
 </body>
 </html>
