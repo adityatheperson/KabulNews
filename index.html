@@ -7,13 +7,15 @@
     <style>
         body {
             -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 0 0 100px 0; /* Add padding to the bottom to account for the fixed footer */
             background-color: #f4f4f4;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            overflow-y: auto; /* Enable vertical scrolling */
         }
         header {
             background-image: url('kabul.png');
@@ -31,15 +33,14 @@
             padding: 10px 0;
         }
         nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav ul li {
-  display: inline;
-  margin-right: 20px;
-}
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
         nav a {
             color: white;
             text-decoration: none;
@@ -48,7 +49,7 @@ nav ul li {
         nav a:hover {
             text-decoration: underline;
         }
-        .news-section {
+        .news-section, .breaking-news {
             padding: 20px;
             margin: 20px;
             background-color: white;
@@ -56,8 +57,6 @@ nav ul li {
         }
         .breaking-news {
             border: 2px solid red;
-            padding: 10px;
-            margin-bottom: 20px;
             background: linear-gradient(to right, #ffe259, #ffa751);
             color: #003366;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -78,12 +77,14 @@ nav ul li {
             }
         }
         .news-image {
-            width: 100%;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            width: 7%;
             height: auto;
             border-radius: 4px;
             margin-top: 10px;
         }
-       
         footer {
             background-image: url('kabul.png');
             background-size: cover;
@@ -95,12 +96,13 @@ nav ul li {
             position: fixed;
             bottom: 0;
             width: 100%;
+            height: 50px; /* Ensure the footer has a specific height */
         }
         #popupAd img {
-    max-width: 100%; /* Ensures the image fits within the popup */
-    height: auto; /* Maintains the aspect ratio */
-    border-radius: 4px; /* Optional: Rounds the corners of the image */
-}
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
         #popupAd {
             position: fixed;
             width: 300px;
@@ -127,83 +129,74 @@ nav ul li {
     <header>
         <h1>Kabul News</h1>
         <p>Reporting on everything and anything Kabul related</p>
-        
     </header>
     <nav>
         <ul>
-        <li><a href="#home" onclick="navigateToPage('index.html') ;">Home</a></li>
-        <li><a href="#home" onclick="navigateToPage('articles.html'); ">Articles</a></li>
-        <li><a href="#home" onclick="navigateToPage('aboutus.html'); ">About Us</a></li>
-        <li><a href="#home" onclick="navigateToPage('jobs.html'); ">Jobs</a></li>
+            <li><a href="#home" onclick="navigateToPage('index.html');">Home</a></li>
+            <li><a href="#home" onclick="navigateToPage('articles.html');">Articles</a></li>
+            <li><a href="#home" onclick="navigateToPage('aboutus.html');">About Us</a></li>
+            <li><a href="#home" onclick="navigateToPage('jobs.html');">Jobs</a></li>
         </ul>
     </nav>
-
-    
     <div class="news-section" id="breakingNews">
-        <!-- Breaking news will be inserted here -->
+        <p>hello</p>
     </div>
-    
     <div class="news_section" id="otherNews">
         <!-- Other news articles will be inserted here -->
     </div>
-
     <div id="popupAd">
         <span id="closeAd" onclick="closeAd()">×</span>
         <div id="adContent"></div>
     </div>
-    
     <footer>
         <p>Copyright &copy; 2022 Kabul News. All rights reserved.</p>
     </footer>
-    
     <script>
-        // Ad data
         const ads = [
-    {
-        title: "Special Offer!",
-        content: "Don't miss out on our ultra sharp 'killer' shovel",
-        image: "shovel.png"
-    },
-    {
-        title: "Limited Time Sale! Buy 1 get 1 Free",
-        content: "",
-        image: "burka.png"
-    },
-    {
-        title: "New Product Launch!",
-        content: "Rice ready is only 2 minutes!",
-        image: "ricecooker.png"
-    }
-];
+            {
+                title: "Special Offer!",
+                content: "Don't miss out on our ultra sharp 'killer' shovel",
+                image: "shovel.png"
+            },
+            {
+                title: "Limited Time Sale! Buy 1 get 1 Free",
+                content: "",
+                image: "burka.png"
+            },
+            {
+                title: "New Product Launch!",
+                content: "Rice ready is only 2 minutes!",
+                image: "ricecooker.png"
+            }
+        ];
 
-function chooseAd() {
-    const adIndex = Math.floor(Math.random() * ads.length); // Correctly uses adIndex
-    const ad = ads[adIndex];  // Properly access the ad using adIndex
-    const adContentHTML = `
-        <h3>${ad.title}</h3>
-        <p>${ad.content}</p>
-        <img src="${ad.image}" alt="${ad.title}" style="width:100%; height: auto; border-radius: 4px;">
-    `;
-    document.getElementById('adContent').innerHTML = adContentHTML;
-    document.getElementById('popupAd').style.display = 'block';
-}
+        function chooseAd() {
+            const adIndex = Math.floor(Math.random() * ads.length);
+            const ad = ads[adIndex];
+            const adContentHTML = `
+                <h3>${ad.title}</h3>
+                <p>${ad.content}</p>
+                <img src="${ad.image}" alt="${ad.title}" style="width:100%; height: auto; border-radius: 4px;">
+            `;
+            document.getElementById('adContent').innerHTML = adContentHTML;
+            document.getElementById('popupAd').style.display = 'block';
+        }
 
         function closeAd() {
             document.getElementById('popupAd').style.display = 'none';
         }
 
-        // News Article display functionality
         const newsArticles = [
-            { title: "Breaking News: Peace Talks Begin", content: "In a historic move, peace talks have begun in Kabul...", imageUrl: "https://example.com/images/peace-talks.jpg", isBreaking: true },
-            { title: "Local Update: New School Opens", content: "A new school in Kabul opens its doors this week to hundreds of eager students...", imageUrl: "https://example.com/images/new-school.jpg", isBreaking: false },
-            { title: "Economic News: Market Rises", content: "The Kabul stock market showed signs of recovery with a steady rise this morning...", imageUrl: "https://example.com/images/market-rise.jpg", isBreaking: false }
+            { title: "Breaking News: Wife Kills Husband in Self-Defense", content: "The police investigate the murder of Rasheed, who was supposedly killed with a shovel", imageUrl: "anothershovel.png", isBreaking: true, link: "Mainarticle" },
+            { title: "Local Update: New School Opens", content: "A new school in Kabul opens its doors this week to hundreds of eager students...", imageUrl: "school3.png", isBreaking: false, link: "sidearticle1" },
+            { title: "Rice Prices Soar in Kabul", content: "Due to lack of more demand prices have increased", imageUrl: "https://example.com/images/market-rise.jpg", isBreaking: false, link: "sidearticle2" }
         ];
 
         function displayNews() {
             const breakingNewsContainer = document.getElementById('breakingNews');
             const otherNewsContainer = document.getElementById('otherNews');
-            breakingNewsContainer.innerHTML = ''; // Clear previous content
-            otherNewsContainer.innerHTML = ''; // Clear previous content
+            breakingNewsContainer.innerHTML = '';
+            otherNewsContainer.innerHTML = '';
 
             let displayedBreaking = false;
 
@@ -212,10 +205,11 @@ function chooseAd() {
                                       <h3>${article.title}</h3>
                                       <p>${article.content}</p>
                                       <img src="${article.imageUrl}" alt="Image for ${article.title}" class="news-image">
+                                      <a href="${article.link}.html" class="read-more">Read More</a>
                                   </div>`;
                 if (article.isBreaking && !displayedBreaking) {
                     breakingNewsContainer.innerHTML = newsItem;
-                    displayedBreaking = true; // Ensure only one breaking news is shown
+                    displayedBreaking = true;
                 } else {
                     otherNewsContainer.innerHTML += newsItem;
                 }
@@ -223,18 +217,13 @@ function chooseAd() {
         }
 
         window.onload = function() {
-            displayNews(); // Display news when the page loads
-            chooseAd(); // Display first ad when the page loads
-            setInterval(chooseAd, 180000); // Refresh ad every 3 minutes
+            displayNews();
+            chooseAd();
+            setInterval(chooseAd, 180000);
         }
         function navigateToPage(page) {
-    window.location.href = page;
-}
+            window.location.href = page;
+        }
     </script>
-
-<div id="popupAd">
-    <span id="closeAd" onclick="closeAd()">×</span>
-    <div id="adContent"></div>
-</div>
 </body>
 </html>
